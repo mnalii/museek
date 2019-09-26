@@ -13,7 +13,7 @@ if (env == 'development' || env == 'test') require('dotenv').config()
 const configDb = {
   development: process.env.DBDEV,
   test: process.env.DBTEST,
-  staging: process.env.DBCONNECTION
+  production: process.env.DBCONNECTION
 }
 
 mongoose
