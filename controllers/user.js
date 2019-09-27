@@ -18,7 +18,7 @@ const login = async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
     const token = await user.getUserToken()
-    res.send({user, token})
+    res.status(200).send({user, token})
   } catch (error) {
     res.status(400).send(error.message)
     console.log(error)

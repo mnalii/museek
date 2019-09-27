@@ -32,6 +32,10 @@ app.use(express.urlencoded({extended: false}))
 app.use(cors())
 app.use(morgan('tiny'))
 
+app.get("/", (req, res) => {
+  res.send({ hello: "world" });
+})
+
 // Router Middleware
 app.use('/api/event', eventRoutes);
 app.use('/api/user', userRoutes)
