@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const app = express()
 const userRoutes = require('./routes/user')
+const eventRoutes = require('./routes/event');
 
 
 const env = process.env.NODE_ENV || 'development';
@@ -17,7 +18,7 @@ const configDb = {
 }
 
 mongoose
-  .connect(configDb[env], {
+.connect(configDb[env], {
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useCreateIndex: true
@@ -33,8 +34,11 @@ app.use(morgan('tiny'))
 
 // Router Middleware
 app.use('/api', userRoutes)
+app.use('/api/event', eventRoutes);
 
 
 const port = process.env.PORT || 3000
 
 app.listen(port, () => console.log(`Listening on port ${port} and run on ${env}`))
+
+module.exports = app;
