@@ -25,13 +25,17 @@ const login = async (req, res) => {
   }
 }
 
-const logout = async (req, res) => {
+const getUser = async (req, res) => {
+  const {role} = req.query;
+  var query = {};
+  if (role) {
+    query = { role };
+  }
   try {
-    req.user.tokens = []
-    await req.user.save()
-    res.send(req.user)
+    const users = await User.find(query)
+    res.send(users)
   } catch (error) {
-    res.status(500).send(error.message)
+    res.status(400).send(error.message)
   }
 }
 
@@ -43,6 +47,6 @@ const userProfile = async (req, res) => {
 module.exports = {
   register,
   login,
-  logout,
-  userProfile
+  userProfile,
+  getUser
 }
