@@ -33,8 +33,8 @@ app.use(cors())
 app.use(morgan('tiny'))
 
 // Router Middleware
-app.use('/api', userRoutes)
 app.use('/api/event', eventRoutes);
+app.use('/api/user', userRoutes)
 
 
 const port = process.env.PORT || 3000

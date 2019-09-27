@@ -42,9 +42,11 @@ const userSchema = new mongoose.Schema({
   price: {
     type: Number
   },
-  skills: {
-    type: Array
-  },
+  skill: [
+    {
+      type: String
+    }
+  ],
   description: {
     type: String
   },
