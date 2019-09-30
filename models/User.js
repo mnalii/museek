@@ -28,9 +28,9 @@ const userSchema = new mongoose.Schema({
     trim: true,
     minlength: 6,
   },
-  profile_picture: {
+  profile_picture: [{
     type: Object
-  },
+  }],
   role: {
     type: String,
     enum:['musician', 'customer']
@@ -42,17 +42,24 @@ const userSchema = new mongoose.Schema({
   price: {
     type: Number
   },
-  skill: [
-    {
-      type: String
-    }
-  ],
+  gender:{
+    type: String,
+    enum: ['male', 'female']
+  },
+  address: {
+    typpe: String
+  },
+  city: {
+    type: String
+  },
+  country: {
+    type: String
+  },
+  skill: [String],
   description: {
     type: String
   },
-  rating: {
-    type: Number
-  },
+  rating: [Number],
   tokens: [{
     token:{
       type: String,
@@ -65,6 +72,11 @@ userSchema.methods.toJSON = function () {
   const user = this
 
   const userObject = user.toObject()
+
+  if(userObject.role === 'customer'){
+    delete userObject.skill
+    delete userObject.rating
+  }
 
   delete userObject.password
   delete userObject.tokens
