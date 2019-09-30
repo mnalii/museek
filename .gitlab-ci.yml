@@ -1,0 +1,19 @@
+image: node:latest
+
+stages:
+  - test
+  - production
+
+deploy-to-heroku:
+  type: deploy
+  stage: production
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
+    - curl -X POST --data chat_id=$CHAT_ID --data-urlencode text="Museek | $CI_COMMIT_TITLE - Deployed to Heroku!" $TELEGRAM_BOT/sendMessage
+  
+  only:
+    - master
