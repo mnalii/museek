@@ -45,7 +45,7 @@ describe('USER', () => {
                    expect(res.status).eql(201)
                    done()
                })
-           })
+        })
         it('FAILED ADD USER WITH EXIST EMAIL', done => {
         chai.request(server)
             .post('/api/user/register')
@@ -60,6 +60,21 @@ describe('USER', () => {
                 expect(res.status).eql(400)
                 done()
             })
+        })
+        it('FAILED WITH INVALID EMAIL', done => {
+            chai.request(server)
+                .post('/api/user/register')
+                .send({
+                    name: 'Muhammad Nur Ali',
+                    email: 'muh.nurali43gmail.com',
+                    password: '1234567',
+                    role: 'customer'
+                })
+                .end((err, res) => {
+                    // console.log(res.body)
+                    expect(res.status).eql(400)
+                    done()
+                })
         })
         it('LOGIN CUSTOMER', done => {
             chai.request(server)
