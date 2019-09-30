@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
     enum: ['male', 'female']
   },
   address: {
-    typpe: String
+    type: String
   },
   city: {
     type: String
