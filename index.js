@@ -5,7 +5,7 @@ const cors = require('cors')
 const app = express()
 const userRoutes = require('./routes/user')
 const eventRoutes = require('./routes/event');
-
+// require('dotenv').config()
 
 const env = process.env.NODE_ENV || 'development';
 

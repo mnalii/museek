@@ -5,12 +5,14 @@ const {
   register, 
   login,
   getUser, 
-  userProfile } = require('../controllers/user')
+  userProfile,
+  editProfile } = require('../controllers/user')
 const auth  = require('../middleware/auth')
 
 router.post('/register', register)
 router.post('/login', login)
-router.get('/me', auth, userProfile)
+router.get('/profile', auth, userProfile)
+router.put('/profile', auth, editProfile)
 router.get('/', getUser)
 
 module.exports = router
