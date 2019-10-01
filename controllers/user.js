@@ -10,7 +10,7 @@ const register = async (req, res) => {
     await user.save()
     const token = await user.getUserToken()
     verifiedEmail(user.email, user.name, token)
-    res.status(201).send({user})
+    res.status(201).send({ user })
   } catch (error) {
     res.status(400).send(error.message)
   }
@@ -20,14 +20,14 @@ const login = async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
     const token = await user.getUserToken()
-    res.status(200).send({user, token})
+    res.status(200).send({ user, token })
   } catch (error) {
     res.status(400).send(error.message)
   }
 }
 
 const getUser = async (req, res) => {
-  const {role} = req.query;
+  const { role } = req.query;
   var query = {};
   if (role) {
     query = { role };
@@ -45,7 +45,7 @@ const userProfile = async (req, res) => {
 }
 
 const editProfile = async (req, res) => {
-  if(req.user.role === 'musician'){
+  if (req.user.role === 'musician') {
     const updates = Object.keys(req.body)
     const updateFields = ['name', 'email', 'password', 'profile_picture', 'price', 'gender', 'address', 'city', 'country', 'skill', 'description']
     const isValidFields = updates.every((update) => updateFields.includes(update))
@@ -53,13 +53,13 @@ const editProfile = async (req, res) => {
     if (!isValidFields) return res.status(400).send({ error: 'Invalid updates!' })
 
     try {
-        updates.forEach((update) => req.user[update] = req.body[update])
-        await req.user.save()
-        res.send(req.user)
+      updates.forEach((update) => req.user[update] = req.body[update])
+      await req.user.save()
+      res.send(req.user)
     } catch (e) {
-        res.status(400).send(e)
+      res.status(400).send(e)
     }
-  } else if (req.user.role === 'customer'){
+  } else if (req.user.role === 'customer') {
     const updates = Object.keys(req.body)
     const updateFields = ['name', 'email', 'password', 'profile_picture', 'gender', 'address', 'city', 'country']
     const isValidFields = updates.every((update) => updateFields.includes(update))
@@ -67,13 +67,41 @@ const editProfile = async (req, res) => {
     if (!isValidFields) return res.status(400).send({ error: 'Invalid updates!' })
 
     try {
-        updates.forEach((update) => req.user[update] = req.body[update])
-        await req.user.save()
-        res.send(req.user)
+      updates.forEach((update) => req.user[update] = req.body[update])
+      await req.user.save()
+      res.send(req.user)
     } catch (e) {
-        res.status(400).send(e)
+      res.status(400).send(e)
     }
   }
+}
+
+const uploadAvatar = async (req, res, next) => {
+  const id = req.user._id;
+  if (req.file) {
+    const file = uri(req).content;
+    var response = {};
+    try {
+      response = await uploader.upload(file);
+    } catch (error) {
+      res.status(500).json({
+        message: error
+      })
+    }
+    return User.findByIdAndUpdate({ _id: id }, { $set: { profile_picture: response } }, (error, result) => {
+      if (error) {
+        return res.status(500).json({
+          message: error
+        })
+      }
+      return res.status(201).json({
+        message: 'Avatar Uploaded'
+      })
+    })
+  }
+  return res.status(404).json({
+    message: 'No image selected'
+  });
 }
 
 
@@ -82,7 +110,8 @@ module.exports = {
   login,
   userProfile,
   editProfile,
-  getUser
+  getUser,
+  uploadAvatar
 }
 
 

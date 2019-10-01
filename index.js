@@ -6,6 +6,9 @@ const app = express()
 const userRoutes = require('./routes/user')
 const eventRoutes = require('./routes/event');
 // require('dotenv').config()
+const {
+  cloudinaryConfig
+} = require('./config/cloudinaryConfig');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -21,16 +24,18 @@ mongoose
 .connect(configDb[env], {
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
   })
   .then(() => console.log('Database connected'))
   .catch(err => console.log(err))
 
 
+app.use('*', cloudinaryConfig);
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cors())
-app.use(morgan('tiny'))
+if (env !== 'test') app.use(morgan('tiny'))
 
 app.get("/", (req, res) => {
   res.send({ hello: "world" });

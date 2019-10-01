@@ -16,8 +16,8 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     unique: true,
-    validate(value){
-      if(!validator.isEmail(value)){
+    validate(value) {
+      if (!validator.isEmail(value)) {
         throw new Error('Email is not valid')
       }
     }
@@ -28,21 +28,21 @@ const userSchema = new mongoose.Schema({
     trim: true,
     minlength: 6,
   },
-  profile_picture: [{
+  profile_picture: {
     type: Object
-  }],
+  },
   role: {
     type: String,
-    enum:['musician', 'customer']
+    enum: ['musician', 'customer']
   },
-  verified:{
+  verified: {
     type: String,
     enum: ['pending', 'approve', 'reject']
   },
   price: {
     type: Number
   },
-  gender:{
+  gender: {
     type: String,
     enum: ['male', 'female']
   },
@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
   },
   rating: [Number],
   tokens: [{
-    token:{
+    token: {
       type: String,
       required: true
     }
@@ -73,7 +73,7 @@ userSchema.methods.toJSON = function () {
 
   const userObject = user.toObject()
 
-  if(userObject.role === 'customer'){
+  if (userObject.role === 'customer') {
     delete userObject.skill
     delete userObject.rating
   }
@@ -84,20 +84,20 @@ userSchema.methods.toJSON = function () {
   return userObject
 }
 
-userSchema.methods.getUserToken = async function(){
+userSchema.methods.getUserToken = async function () {
   const user = this
-  const token = jwt.sign({_id: user._id.toString()}, process.env.JWT_SECRET_KEY)
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET_KEY)
 
   user.tokens = user.tokens.concat({ token })
   await user.save()
-  
+
   return token
 }
 
-userSchema.pre('save', async function(next){
+userSchema.pre('save', async function (next) {
   const user = this
-  
-  if(user.isModified('password')){
+
+  if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 8)
   }
 
@@ -105,15 +105,15 @@ userSchema.pre('save', async function(next){
 })
 
 userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({email})
+  const user = await User.findOne({ email })
 
-  if(!user){
+  if (!user) {
     throw new Error('No email found!')
   }
 
   const isMatch = await bcrypt.compare(password, user.password)
 
-  if(!isMatch){
+  if (!isMatch) {
     throw new Error('Unable to login!')
   }
 
