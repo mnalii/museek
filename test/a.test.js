@@ -6,7 +6,7 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 
 const server = require('../index');
-const User = require('../models/User')
+const User = require('../models/User');
 const Event = require('../models/Event');
 
 var usertoken;
@@ -14,9 +14,9 @@ var usertoken;
 describe('USER', () => {
     before(done => {
         User.deleteMany({}, (err) => {
-            done()
-        })
-    })
+            done();
+        });
+    });
 
     describe('POST', () => {
         it('ADD CUSTOMER USER', done => {
@@ -30,10 +30,10 @@ describe('USER', () => {
                 })
                 .end((err, res) => {
                     // console.log(res.body)
-                    expect(res.status).eql(201)
-                    done()
-                })
-        })
+                    expect(res.status).eql(201);
+                    done();
+                });
+        });
         it('ADD MUSICIAN USER', done => {
             chai.request(server)
                 .post('/api/user/register')
@@ -45,10 +45,10 @@ describe('USER', () => {
                 })
                 .end((err, res) => {
                     //    console.log(res.body)
-                    expect(res.status).eql(201)
-                    done()
-                })
-        })
+                    expect(res.status).eql(201);
+                    done();
+                });
+        });
         it('FAILED ADD USER WITH EXIST EMAIL', done => {
             chai.request(server)
                 .post('/api/user/register')
@@ -60,10 +60,10 @@ describe('USER', () => {
                 })
                 .end((err, res) => {
                     // console.log(res.body)
-                    expect(res.status).eql(400)
-                    done()
-                })
-        })
+                    expect(res.status).eql(400);
+                    done();
+                });
+        });
         it('FAILED WITH INVALID EMAIL', done => {
             chai.request(server)
                 .post('/api/user/register')
@@ -75,10 +75,10 @@ describe('USER', () => {
                 })
                 .end((err, res) => {
                     // console.log(res.body)
-                    expect(res.status).eql(400)
-                    done()
-                })
-        })
+                    expect(res.status).eql(400);
+                    done();
+                });
+        });
         it('LOGIN CUSTOMER', done => {
             chai.request(server)
                 .post('/api/user/login')
@@ -122,11 +122,11 @@ describe('USER', () => {
                 .set('Authorization', usertoken)
                 .attach('avatar', fs.readFileSync('./test/avatar.png'), 'avatar.png')
                 .end((err, res) => {
-                    expect(res.status).eql(201)
-                    done()
+                    expect(res.status).eql(201);
+                    done();
                 });
-        })
-    })
+        });
+    });
     describe('GET', () => {
         it('GET ALL USER', done => {
             chai.request(server)
@@ -136,6 +136,6 @@ describe('USER', () => {
                     expect(res.body.length).eql(2);
                     done();
                 });
-        })
+        });
     });
-})
+});

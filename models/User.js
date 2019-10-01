@@ -1,8 +1,9 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const uniqueValidator = require('mongoose-unique-validator')
+/* eslint-disable camelcase */
+const mongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -18,7 +19,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate(value) {
       if (!validator.isEmail(value)) {
-        throw new Error('Email is not valid')
+        throw new Error('Email is not valid');
       }
     }
   },
@@ -66,60 +67,60 @@ const userSchema = new mongoose.Schema({
       required: true
     }
   }]
-})
+});
 
 userSchema.methods.toJSON = function () {
-  const user = this
+  const user = this;
 
-  const userObject = user.toObject()
+  const userObject = user.toObject();
 
   if (userObject.role === 'customer') {
-    delete userObject.skill
-    delete userObject.rating
+    delete userObject.skill;
+    delete userObject.rating;
   }
 
-  delete userObject.password
-  delete userObject.tokens
+  delete userObject.password;
+  delete userObject.tokens;
 
-  return userObject
-}
+  return userObject;
+};
 
 userSchema.methods.getUserToken = async function () {
-  const user = this
-  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET_KEY)
+  const user = this;
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET_KEY);
 
-  user.tokens = user.tokens.concat({ token })
-  await user.save()
+  user.tokens = user.tokens.concat({ token });
+  await user.save();
 
-  return token
-}
+  return token;
+};
 
 userSchema.pre('save', async function (next) {
-  const user = this
+  const user = this;
 
   if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8)
+    user.password = await bcrypt.hash(user.password, 8);
   }
 
-  next()
-})
+  next();
+});
 
 userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email });
 
   if (!user) {
-    throw new Error('No email found!')
+    throw new Error('No email found!');
   }
 
-  const isMatch = await bcrypt.compare(password, user.password)
+  const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    throw new Error('Unable to login!')
+    throw new Error('Unable to login!');
   }
 
-  return user
-}
+  return user;
+};
 
-userSchema.plugin(uniqueValidator)
-const User = mongoose.model('User', userSchema)
-module.exports = User
+userSchema.plugin(uniqueValidator);
+const User = mongoose.model('User', userSchema);
+module.exports = User;

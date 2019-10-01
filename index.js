@@ -1,9 +1,9 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const morgan = require('morgan')
-const cors = require('cors')
-const app = express()
-const userRoutes = require('./routes/user')
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const cors = require('cors');
+const app = express();
+const userRoutes = require('./routes/user');
 const eventRoutes = require('./routes/event');
 // require('dotenv').config()
 const {
@@ -12,13 +12,13 @@ const {
 
 const env = process.env.NODE_ENV || 'development';
 
-if (env == 'development' || env == 'test') require('dotenv').config()
+if (env == 'development' || env == 'test') require('dotenv').config();
 
 const configDb = {
   development: process.env.DBDEV,
   test: process.env.DBTEST,
   production: process.env.DBCONNECTION
-}
+};
 
 mongoose
 .connect(configDb[env], {
@@ -28,26 +28,26 @@ mongoose
     useFindAndModify: false
   })
   .then(() => console.log('Database connected'))
-  .catch(err => console.log(err))
+  .catch(err => console.log(err));
 
 
 app.use('*', cloudinaryConfig);
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
-app.use(cors())
-if (env !== 'test') app.use(morgan('tiny'))
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(cors());
+if (env !== 'test') app.use(morgan('tiny'));
 
 app.get("/", (req, res) => {
   res.send({ hello: "world" });
-})
+});
 
 // Router Middleware
 app.use('/api/event', eventRoutes);
-app.use('/api/user', userRoutes)
+app.use('/api/user', userRoutes);
 
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`Listening on port ${port} and run on ${env}`))
+app.listen(port, () => console.log(`Listening on port ${port} and run on ${env}`));
 
 module.exports = app;
