@@ -14,7 +14,9 @@ var usertoken;
 describe('USER', () => {
     before(done => {
         User.deleteMany({}, (err) => {
-            done();
+            Event.deleteMany({}, (err) => {
+                done();
+            });
         });
     });
 
