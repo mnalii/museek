@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": false,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-const-assign": "error",
+        "semi": "error",
+        "array-bracket-spacing": "warn",
+        "arrow-spacing": "warn",
+        "camelcase": "warn",
+        "callback-return": "warn",
+        "comma-spacing": "warn",
+        "default-case": "error",
+        "eol-last": "warn",
+        "key-spacing": "warn"
+    }
+}
