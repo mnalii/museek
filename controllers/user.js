@@ -5,14 +5,29 @@ const { uploader } = require('../config/cloudinaryConfig');
 
 
 const register = async (req, res) => {
-  const user = new User(req.body);
+  let user = await User.findOne({ email: req.body.email})
+  if(user) return res.status(400).json({ 
+    error: {
+      message: 'Email is already registered. Please use another email'
+    }
+  })
+  user = new User(req.body);
   try {
     await user.save();
     const token = await user.getUserToken();
     verifiedEmail(user.email, user.name, token);
-    res.status(201).send({ user });
+    res.status(201).send({ 
+      user,
+      response: {
+        message: 'User succesfully registered',
+        success: true
+      } });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send({
+      error: {
+        message: error.message
+      }
+    });
   }
 };
 
@@ -20,9 +35,18 @@ const login = async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password);
     const token = await user.getUserToken();
-    res.status(200).send({ user, token });
+    res.status(200).json({ 
+      user, 
+      response: {
+        message: 'Success login',
+        success: true
+      },token });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send({
+      error: {
+        message: error.message
+      }
+    });
   }
 };
 
