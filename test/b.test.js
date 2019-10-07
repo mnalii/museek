@@ -10,6 +10,7 @@ let customerToken;
 let musicianToken;
 let musicianId;
 let eventId;
+let favoriteId;
 
 describe('USER', () => {
     it('LOGIN MUSICIAN', done => {
@@ -165,6 +166,69 @@ describe('EVENT', () => {
             .get('/api/event')
             .end((err, res) => {
                 expect(res.body.length).eql(1);
+                done();
+            });
+    });
+});
+
+describe('FAVORITE', () => {
+    it('GET CUSTOMER FAVORITE WITH 0 DATA', done => {
+        chai.request(server)
+            .get('/api/favorite')
+            .set('Authorization', customerToken)
+            .end((err, res) => {
+                expect(res.status).eql(200);
+                expect(res.body.length).eql(0);
+                done();
+            });
+    });
+    it('ADD MUSICIAN TO CUSTOMER FAVORITE', done => {
+        chai.request(server)
+            .post('/api/favorite')
+            .set('Authorization', customerToken)
+            .send({
+                musicianId
+            })
+            .end((err, res) => {
+                expect(res.status).eql(201);
+                done();
+            });
+    });
+    it('GET CUSTOMER FAVORITE WITH 1 DATA', done => {
+        chai.request(server)
+            .get('/api/favorite')
+            .set('Authorization', customerToken)
+            .end((err, res) => {
+                expect(res.status).eql(200);
+                expect(res.body.length).eql(1);
+                favoriteId = res.body.data[0]._id;
+            });
+    });
+    it('GET FAVORITE DETAIL', done => {
+        chai.request(server)
+            .get(`/api/favorite/${favoriteId}`)
+            .set('Authorization', customerToken)
+            .end((err, res) => {
+                expect(res.status).eql(200);
+                done();
+            });
+    })
+    it('DELETE FAVORITE ', done => {
+        chai.request(server)
+            .delete(`/api/favorite/${favoriteId}`)
+            .set('Authorization', customerToken)
+            .end((err, res) => {
+                expect(res.status).eql(200);
+                done();
+            });
+    });
+    it('GET CUSTOMER FAVORITE WITH 0 DATA', done => {
+        chai.request(server)
+            .get('/api/favorite')
+            .set('Authorization', customerToken)
+            .end((err, res) => {
+                expect(res.status).eql(200);
+                expect(res.body.length).eql(0);
                 done();
             });
     });

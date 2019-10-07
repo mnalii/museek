@@ -8,6 +8,7 @@ const expect = chai.expect;
 const server = require('../index');
 const User = require('../models/User');
 const Event = require('../models/Event');
+const Favorite = require('../models/Favorite');
 
 var usertoken;
 
@@ -15,7 +16,9 @@ describe('USER', () => {
     before(done => {
         User.deleteMany({}, (err) => {
             Event.deleteMany({}, (err) => {
-                done();
+                Favorite.deleteMany({}, (err) => {
+                    done();
+                });
             });
         });
     });
@@ -31,7 +34,6 @@ describe('USER', () => {
                     role: 'customer'
                 })
                 .end((err, res) => {
-                    // console.log(res.body)
                     expect(res.status).eql(201);
                     done();
                 });
@@ -46,7 +48,6 @@ describe('USER', () => {
                     role: 'musician'
                 })
                 .end((err, res) => {
-                    //    console.log(res.body)
                     expect(res.status).eql(201);
                     done();
                 });
@@ -61,7 +62,6 @@ describe('USER', () => {
                     role: 'customer'
                 })
                 .end((err, res) => {
-                    // console.log(res.body)
                     expect(res.status).eql(400);
                     done();
                 });
@@ -76,7 +76,6 @@ describe('USER', () => {
                     role: 'customer'
                 })
                 .end((err, res) => {
-                    // console.log(res.body)
                     expect(res.status).eql(400);
                     done();
                 });
