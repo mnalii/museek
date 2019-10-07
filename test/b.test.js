@@ -202,6 +202,7 @@ describe('FAVORITE', () => {
                 expect(res.status).eql(200);
                 expect(res.body.length).eql(1);
                 favoriteId = res.body.data[0]._id;
+                done();
             });
     });
     it('GET FAVORITE DETAIL', done => {
@@ -212,7 +213,7 @@ describe('FAVORITE', () => {
                 expect(res.status).eql(200);
                 done();
             });
-    })
+    });
     it('DELETE FAVORITE ', done => {
         chai.request(server)
             .delete(`/api/favorite/${favoriteId}`)
