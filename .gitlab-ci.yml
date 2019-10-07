@@ -5,7 +5,7 @@ stages:
 test:
   type: test
   stage: test
-  image: node:latest
+  image: node:10.16.3-alpine
   variables:
     DBTEST: mongodb+srv://ali:ali@cluster0-kj6pk.mongodb.net/test?retryWrites=true&w=majority
     NODE_ENV: test
@@ -14,6 +14,7 @@ test:
     CLOUDINARY_CLOUD_NAME: dxjwnnjaz
     CLOUDINARY_API_KEY: 214498814233799
     CLOUDINARY_API_SECRET: vOTSzrkiSiV01yJjQRkDd3pZy9g
+    DBDEV: mongodb+srv://ali:ali@cluster0-oltyy.mongodb.net/test?retryWrites=true&w=majority
   script:
     - npm install
     - npm test
