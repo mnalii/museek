@@ -1,5 +1,3 @@
-image: node:latest
-
 stages:
   - test
   - production
@@ -7,7 +5,7 @@ stages:
 test:
   type: test
   stage: test
-  image: mongo:latest
+  image: node:latest
   variables:
     DBTEST: mongodb+srv://ali:ali@cluster0-kj6pk.mongodb.net/test?retryWrites=true&w=majority
     NODE_ENV: test
