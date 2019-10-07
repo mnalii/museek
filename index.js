@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 const userRoutes = require('./routes/user');
 const eventRoutes = require('./routes/event');
+const favoriteRoutes = require('./routes/Favorite');
 // require('dotenv').config()
 const {
   cloudinaryConfig
@@ -44,6 +45,7 @@ app.get("/", (req, res) => {
 // Router Middleware
 app.use('/api/event', eventRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/favorite', favoriteRoutes);
 
 
 const port = process.env.PORT || 3000;
