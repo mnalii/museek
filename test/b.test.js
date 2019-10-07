@@ -144,6 +144,27 @@ describe('EVENT', () => {
             .get('/api/event')
             .end((err, res) => {
                 expect(res.body.length).eql(1);
+                eventId = res.body.data[0]._id;
+                done();
+            });
+    });
+    it('UPDATE 1 EVENT', done => {
+        chai.request(server)
+            .put(`/api/event/${eventId}`)
+            .send({
+                duration: 1800000
+            })
+            .set('Authorization', customerToken)
+            .end((err, res) => {
+                expect(res.status).eql(200);
+                done();
+            });
+    });
+    it('CHECK UPDATED EVENT', done => {
+        chai.request(server)
+            .get('/api/event')
+            .end((err, res) => {
+                expect(res.body.length).eql(1);
                 done();
             });
     });

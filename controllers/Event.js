@@ -12,6 +12,8 @@ exports.getEvent = (req, res, next) => {
     } = req.query;
     let query = {};
     return Event.find(query)
+        .populate('musicianId')
+        .populate('customerId')
         .then(result => {
             return res.status(200).json({
                 data: result,
@@ -24,6 +26,8 @@ exports.getEvent = (req, res, next) => {
 exports.getEventDetail = (req, res, next) => {
     const id = req.params.id;
     return Event.findById(id)
+        .populate('musicianId')
+        .populate('customerId')
         .then(result => {
             if (!result) {
                 return res.status(404).json({ message: 'Event not found' });
@@ -58,7 +62,28 @@ exports.addEvent = (req, res, next) => {
 exports.updateEvent = (req, res, next) => {
     const customerId = req.user._id;
     const id = req.params.id;
-    return res.status(200).json({ message: 'Event updated' });
+    const {
+        category,
+        musicianId,
+        dateEvent,
+        duration,
+        location
+    } = req.body;
+    const event = new Event({
+        _id: id,
+        category,
+        musicianId,
+        customerId,
+        dateEvent,
+        duration,
+        location
+    });
+    return Event.findOneAndUpdate({ _id: id }, event, (error, result) => {
+        if (error) {
+            return res.status(500).json({ message: error.toString() });
+        }
+        return res.status(200).json({ message: 'Event updated' });
+    });
 };
 
 exports.deleteEvent = (req, res, next) => {
