@@ -18,7 +18,7 @@ test:
   script:
     - npm install
     - npm test
-    - curl -X POST --data chat_id=$CHAT_ID --data-urlencode text="Museek | $(!!)" $TELEGRAM_BOT/sendMessage
+    - curl -X POST --data chat_id=$CHAT_ID --data-urlencode text="Museek | Test passed!" $TELEGRAM_BOT/sendMessage
   only:
     - master
 
