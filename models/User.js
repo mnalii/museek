@@ -108,6 +108,7 @@ userSchema.pre('save', async function (next) {
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 
+  /* istanbul ignore if */
   if (!user) {
     throw new Error('No email found!');
   }

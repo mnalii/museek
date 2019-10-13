@@ -20,7 +20,10 @@ exports.getEvent = (req, res, next) => {
                 length: result.length
             });
         })
-        .catch(error => res.status(500).json({ message: error }));
+        .catch(error => {
+            /* istanbul ignore next */
+            return res.status(500).json({ message: error });
+        });
 };
 
 exports.getEventDetail = (req, res, next) => {
@@ -29,12 +32,16 @@ exports.getEventDetail = (req, res, next) => {
         .populate('musicianId')
         .populate('customerId')
         .then(result => {
+            /* istanbul ignore if */
             if (!result) {
                 return res.status(404).json({ message: 'Event not found' });
             }
             return res.status(200).json({ data: result });
         })
-        .catch(error => res.status(500).json({ message: error }));
+        .catch(error => {
+            /* istanbul ignore next */
+            return res.status(500).json({ message: error });
+        });
 };
 
 exports.addEvent = (req, res, next) => {
@@ -56,7 +63,10 @@ exports.addEvent = (req, res, next) => {
     });
     return event.save()
         .then(result => res.status(201).json({ message: 'Event Added' }))
-        .catch(error => res.status(500).json({ message: error }));
+        .catch(error => {
+            /* istanbul ignore next */
+            return res.status(500).json({ message: error });
+        });
 };
 
 exports.updateEvent = (req, res, next) => {
@@ -79,6 +89,7 @@ exports.updateEvent = (req, res, next) => {
         location
     });
     return Event.findOneAndUpdate({ _id: id }, event, (error, result) => {
+        /* istanbul ignore next */
         if (error) {
             return res.status(500).json({ message: error.toString() });
         }
@@ -90,6 +101,7 @@ exports.deleteEvent = (req, res, next) => {
     const customerId = req.user._id;
     const id = req.params.id;
     return Event.findByIdAndDelete({ _id: mongoose.mongo.ObjectId(id), customerId: mongoose.mongo.ObjectId(customerId) }, (error, result) => {
+        /* istanbul ignore next */
         if (error) {
             return res.status(500).json({ message: error });
         }
