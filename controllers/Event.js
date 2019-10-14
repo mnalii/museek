@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const Event = require('../models/Event');
 
@@ -7,10 +8,22 @@ exports.getEvent = (req, res, next) => {
         category,
         musicianId,
         customerId,
-        dateEvent,
-        location
+        dateEvent
     } = req.query;
     let query = {};
+    if (dateEvent) {
+        query = { dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() } };
+    } else if (musicianId) {
+        query = { musicianId: mongoose.mongo.ObjectId(musicianId) };
+    } else if (customerId) {
+        query = { customerId: mongoose.mongo.ObjectId(customerId) };
+    }
+    if (dateEvent && musicianId) {
+        query = { musicianId: mongoose.mongo.ObjectId(musicianId), dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() } };
+    }
+    if (dateEvent && customerId) {
+        query = { customerId: mongoose.mongo.ObjectId(customerId), dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() } };
+    }
     return Event.find(query)
         .populate('musicianId')
         .populate('customerId')
