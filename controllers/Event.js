@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 
 const Event = require('../models/Event');
+const User = require('../models/User');
+const {
+    sendFcmMessageToUser
+} = require('../services/pushNotification');
 
 exports.getEvent = (req, res, next) => {
     const {
@@ -79,7 +83,17 @@ exports.addEvent = (req, res, next) => {
         location
     });
     return event.save()
-        .then(result => res.status(201).json({ message: 'Event Added' }))
+        .then(async result => {
+            const musician = await User.findById(musicianId);
+            if (musician._id && musician.fcmToken) {
+                // sendFcmMessageToUser({
+                //     title: 'You just got new event',
+                //     body: 'Tap this notification to get detail about it',
+                //     token: musician.fcmToken
+                // });
+            }
+            return res.status(201).json({ message: 'Event Added' });
+        })
         .catch(error => {
             /* istanbul ignore next */
             return res.status(500).json({ message: error });
@@ -118,10 +132,18 @@ exports.setEventStatus = (req, res, next) => {
     const musicianId = req.user._id;
     const id = req.params.id;
     const status = req.body.status;
-    return Event.findByIdAndUpdate({ _id: id }, { $set: { status } }, (error, result) => {
+    return Event.findByIdAndUpdate({ _id: id }, { $set: { status } }, async (error, result) => {
         /* istanbul ignore next */
         if (error) {
             return res.status(500).json({ message: error.toString() });
+        }
+        const customer = await User.findById(result.customerId);
+        if (customer._id && customer.fcmToken) {
+            sendFcmMessageToUser({
+                title: 'Your updated event',
+                body: 'Tap this notification to get detail about it',
+                token: customer.fcmToken
+            });
         }
         return res.status(200).json({ message: `Event set to ${status}` });
     });
