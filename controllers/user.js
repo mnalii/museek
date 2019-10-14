@@ -15,7 +15,7 @@ const register = async (req, res) => {
   try {
     await user.save();
     const token = await user.getUserToken();
-    verifiedEmail(user.email, user.name, token);
+    verifiedEmail(user.email, user.name, token, user.role);
     res.status(201).send({
       user,
       response: {
