@@ -8,21 +8,25 @@ exports.getEvent = (req, res, next) => {
         category,
         musicianId,
         customerId,
-        dateEvent
+        dateEvent,
+        status
     } = req.query;
     let query = {};
+    /* istanbul ignore else */
     if (dateEvent) {
-        query = { dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() } };
+        query = { dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() }, status };
     } else if (musicianId) {
         query = { musicianId: mongoose.mongo.ObjectId(musicianId) };
     } else if (customerId) {
         query = { customerId: mongoose.mongo.ObjectId(customerId) };
     }
+    /* istanbul ignore if */
     if (dateEvent && musicianId) {
-        query = { musicianId: mongoose.mongo.ObjectId(musicianId), dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() } };
+        query = { musicianId: mongoose.mongo.ObjectId(musicianId), dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() }, status };
     }
+    /* istanbul ignore if */
     if (dateEvent && customerId) {
-        query = { customerId: mongoose.mongo.ObjectId(customerId), dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() } };
+        query = { customerId: mongoose.mongo.ObjectId(customerId), dateEvent: { $gte: moment(dateEvent).startOf('day').toDate(), $lte: moment(dateEvent).endOf('day').toDate() }, status };
     }
     return Event.find(query)
         .populate('musicianId')
@@ -107,6 +111,19 @@ exports.updateEvent = (req, res, next) => {
             return res.status(500).json({ message: error.toString() });
         }
         return res.status(200).json({ message: 'Event updated' });
+    });
+};
+
+exports.setEventStatus = (req, res, next) => {
+    const musicianId = req.user._id;
+    const id = req.params.id;
+    const status = req.body.status;
+    return Event.findByIdAndUpdate({ _id: id }, { $set: { status } }, (error, result) => {
+        /* istanbul ignore next */
+        if (error) {
+            return res.status(500).json({ message: error.toString() });
+        }
+        return res.status(200).json({ message: `Event set to ${status}` });
     });
 };
 
