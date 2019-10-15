@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ['male', 'female']
+    enum: ['male', 'female', 'other']
   },
   address: {
     type: String
@@ -66,7 +66,10 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true
     }
-  }]
+  }],
+  fcmToken: {
+    type: String
+  }
 });
 
 userSchema.methods.toJSON = function () {
@@ -108,6 +111,7 @@ userSchema.pre('save', async function (next) {
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 
+  /* istanbul ignore if */
   if (!user) {
     throw new Error('No email found!');
   }

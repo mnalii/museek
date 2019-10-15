@@ -13,6 +13,7 @@ const {
 
 const env = process.env.NODE_ENV || 'development';
 
+/* istanbul ignore if */
 if (env == 'development' || env == 'test') require('dotenv').config();
 
 const configDb = {
@@ -21,10 +22,11 @@ const configDb = {
   production: process.env.DBCONNECTION
 };
 
+/* istanbul ignore next */
 mongoose
-.connect(configDb[env], {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true, 
+  .connect(configDb[env], {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false
   })
@@ -34,10 +36,12 @@ mongoose
 
 app.use('*', cloudinaryConfig);
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+/* istanbul ignore if */
 if (env !== 'test') app.use(morgan('tiny'));
 
+/* istanbul ignore next */
 app.get("/", (req, res) => {
   res.send({ hello: "world" });
 });
