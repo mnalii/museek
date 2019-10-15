@@ -15,7 +15,7 @@ const register = async (req, res) => {
   try {
     await user.save();
     const token = await user.getUserToken();
-    verifiedEmail(user.email, user.name, token);
+    verifiedEmail(user.email, user.name, token, user.role);
     res.status(201).send({
       user,
       response: {
@@ -139,6 +139,20 @@ const uploadAvatar = async (req, res, next) => {
   });
 };
 
+const updateFcmToken = (req, res, next) => {
+  const id = req.user._id;
+  let query = { $set: { fcmToken: req.body.fcmToken } };
+  if (req.body.fcmToken === 'notoken') {
+    query = { $set: { fcmToken: null } };
+  }
+  return User.findByIdAndUpdate({ _id: id }, query, (error, result) => {
+    if (error) {
+      return res.status(500).json({ message: 'Failed update fcm token' });
+    }
+    return res.status(200).json({ message: 'FCM Token updated' });
+  });
+};
+
 
 module.exports = {
   register,
@@ -146,5 +160,6 @@ module.exports = {
   userProfile,
   editProfile,
   getUser,
-  uploadAvatar
+  uploadAvatar,
+  updateFcmToken
 };

@@ -161,6 +161,18 @@ describe('EVENT', () => {
                 done();
             });
     });
+    it('MUSICIAN ACCEPT THE EVENT', done => {
+        chai.request(server)
+            .put(`/api/event/status/${eventId}`)
+            .send({
+                status: 'rejected'
+            })
+            .set('Authorization', musicianToken)
+            .end((err, res) => {
+                expect(res.status).eql(200);
+                done();
+            });
+    });
     it('CHECK UPDATED EVENT', done => {
         chai.request(server)
             .get('/api/event')

@@ -7,7 +7,8 @@ const {
   getUser,
   userProfile,
   editProfile,
-  uploadAvatar
+  uploadAvatar,
+  updateFcmToken
 } = require('../controllers/user');
 const auth = require('../middleware/auth');
 const {
@@ -20,5 +21,6 @@ router.get('/profile', auth, userProfile);
 router.put('/profile', auth, editProfile);
 router.get('/', getUser);
 router.put('/upload-avatar', auth, multerUploads.single('avatar'), uploadAvatar);
+router.put('/fcm-token', auth, updateFcmToken);
 
 module.exports = router;
