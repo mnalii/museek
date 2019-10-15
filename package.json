@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "mocha test/ --timeout 10000 --exit --recursive"
+    "test": "nyc --reporter=html mocha test/ --timeout 10000 --exit --recursive"
   },
   "keywords": [],
   "author": "",
@@ -25,12 +25,15 @@
     "datauri": "^2.0.0",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "googleapis": "^43.0.0",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^6.2.0",
+    "moment": "^2.24.0",
     "mongoose": "^5.7.1",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
+    "nyc": "^14.1.1",
     "validator": "^11.1.0"
   },
   "devDependencies": {
