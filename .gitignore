@@ -1,9 +1,4 @@
 node_modules
 .env
-<<<<<<< HEAD
-.nyc_output
-coverage
-=======
 coverage
 .nyc_output
->>>>>>> 017f90d8c0e36e1ccffd6daaec9d2eb0cae9803f

@@ -8,7 +8,8 @@ const {
   userProfile,
   editProfile,
   uploadAvatar,
-  updateFcmToken
+  updateFcmToken,
+  findMusicianName
 } = require('../controllers/user');
 const auth = require('../middleware/auth');
 const {
@@ -22,5 +23,6 @@ router.put('/profile', auth, editProfile);
 router.get('/', getUser);
 router.put('/upload-avatar', auth, multerUploads.single('avatar'), uploadAvatar);
 router.put('/fcm-token', auth, updateFcmToken);
+router.get('/find', findMusicianName)
 
 module.exports = router;

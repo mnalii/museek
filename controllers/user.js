@@ -53,11 +53,24 @@ const login = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const { role } = req.query;
+  const { role, skill, name, genre } = req.query;
   var query = {};
   /* istanbul ignore if */
-  if (role) {
-    query = { role };
+
+  if (name) {
+    query = { name };
+  }
+  else if(role){
+    query = { role }
+  }
+  else if(skill){
+    query = { skill }
+  }
+  else if(name){
+    query = { name }
+  }
+  else if(genre){
+    query = { genre }
   }
   try {
     const users = await User.find(query);
@@ -67,6 +80,22 @@ const getUser = async (req, res) => {
     res.status(400).send(error.message);
   }
 };
+
+const findMusicianName = async (req, res, next) => {
+  const name  = req.query
+  var query = {}
+  if(name){
+   query = new RegExp('^' + name + '$', 'i')   
+  }
+  try {
+    
+    const user = await User.findOne({query})
+    if(!user) return res.send({message: 'No user found'})
+    res.send(user)
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
+}
 
 /* istanbul ignore next */
 const userProfile = async (req, res) => {
@@ -78,7 +107,7 @@ const editProfile = async (req, res) => {
   /* istanbul ignore if */
   if (req.user.role === 'musician') {
     const updates = Object.keys(req.body);
-    const updateFields = ['name', 'email', 'password', 'profile_picture', 'price', 'gender', 'address', 'city', 'country', 'skill', 'description'];
+    const updateFields = ['name', 'email', 'password', 'profile_picture', 'price', 'gender', 'address', 'city', 'country', 'skill', 'description', 'genre'];
     const isValidFields = updates.every((update) => updateFields.includes(update));
 
     if (!isValidFields) return res.status(400).send({ error: 'Invalid updates!' });
@@ -161,5 +190,6 @@ module.exports = {
   editProfile,
   getUser,
   uploadAvatar,
-  updateFcmToken
+  updateFcmToken,
+  findMusicianName
 };

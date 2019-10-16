@@ -6,6 +6,7 @@ const app = express();
 const userRoutes = require('./routes/user');
 const eventRoutes = require('./routes/event');
 const favoriteRoutes = require('./routes/Favorite');
+const privacyPolicy = require('./routes/privacyPolicy');
 // require('dotenv').config()
 const {
   cloudinaryConfig
@@ -50,7 +51,7 @@ app.get("/", (req, res) => {
 app.use('/api/event', eventRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/favorite', favoriteRoutes);
-
+app.use('/api/privacy-policy', privacyPolicy);
 
 const port = process.env.PORT || 3000;
 

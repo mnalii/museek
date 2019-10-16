@@ -60,6 +60,7 @@ const userSchema = new mongoose.Schema({
   description: {
     type: String
   },
+  genre:[String],
   rating: [Number],
   tokens: [{
     token: {
@@ -80,6 +81,7 @@ userSchema.methods.toJSON = function () {
   if (userObject.role === 'customer') {
     delete userObject.skill;
     delete userObject.rating;
+    delete userObject.genre;
   }
 
   delete userObject.password;
