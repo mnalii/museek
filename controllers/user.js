@@ -3,14 +3,14 @@ const { verifiedEmail } = require('../services/email');
 const { uri } = require('../middleware/cloudinaryUpload');
 const { uploader } = require('../config/cloudinaryConfig');
 
-
 const register = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
-  if (user) return res.status(400).json({
-    error: {
-      message: 'Email is already registered. Please use another email'
-    }
-  });
+  if (user)
+    return res.status(400).json({
+      error: {
+        message: 'Email is already registered. Please use another email'
+      }
+    });
   user = new User(req.body);
   try {
     await user.save();
@@ -34,14 +34,18 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const user = await User.findByCredentials(req.body.email, req.body.password);
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
     const token = await user.getUserToken();
     res.status(200).json({
       user,
       response: {
         message: 'Success login',
         success: true
-      }, token
+      },
+      token
     });
   } catch (error) {
     res.status(400).send({
@@ -53,49 +57,48 @@ const login = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const { role, skill, name, genre } = req.query;
+  const { role, genre } = req.query;
   var query = {};
   /* istanbul ignore if */
 
-  if (name) {
-    query = { name };
-  }
-  else if(role){
-    query = { role }
-  }
-  else if(skill){
-    query = { skill }
-  }
-  else if(name){
-    query = { name }
-  }
-  else if(genre){
-    query = { genre }
+  if (genre) {
+    query = { genre };
+  } else if (role) {
+    query = { role };
   }
   try {
     const users = await User.find(query);
     res.send(users);
   } catch (error) {
     /* istanbul ignore next */
-    res.status(400).send(error.message);
+    res.status(400).send({
+      error: {
+        message: error.message
+      }
+    });
   }
 };
 
-const findMusicianName = async (req, res, next) => {
-  const name  = req.query
-  var query = {}
-  if(name){
-   query = new RegExp('^' + name + '$', 'i')   
-  }
+const getUserId = async (req, res) => {
+  const id = req.params.id;
+
   try {
-    
-    const user = await User.findOne({query})
-    if(!user) return res.send({message: 'No user found'})
-    res.send(user)
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).send({
+        message: 'No user found'
+      });
+    }
+    res.status(200).send(user);
   } catch (error) {
-    res.status(400).send(error.message)
+    res.status(400).send({
+      error: {
+        message: error.message
+      }
+    });
   }
-}
+};
 
 /* istanbul ignore next */
 const userProfile = async (req, res) => {
@@ -107,13 +110,29 @@ const editProfile = async (req, res) => {
   /* istanbul ignore if */
   if (req.user.role === 'musician') {
     const updates = Object.keys(req.body);
-    const updateFields = ['name', 'email', 'password', 'profile_picture', 'price', 'gender', 'address', 'city', 'country', 'skill', 'description', 'genre'];
-    const isValidFields = updates.every((update) => updateFields.includes(update));
+    const updateFields = [
+      'name',
+      'email',
+      'password',
+      'profile_picture',
+      'price',
+      'gender',
+      'address',
+      'city',
+      'country',
+      'skill',
+      'description',
+      'genre'
+    ];
+    const isValidFields = updates.every(update =>
+      updateFields.includes(update)
+    );
 
-    if (!isValidFields) return res.status(400).send({ error: 'Invalid updates!' });
+    if (!isValidFields)
+      return res.status(400).send({ error: 'Invalid updates!' });
 
     try {
-      updates.forEach((update) => req.user[update] = req.body[update]);
+      updates.forEach(update => (req.user[update] = req.body[update]));
       await req.user.save();
       res.send(req.user);
     } catch (e) {
@@ -121,13 +140,25 @@ const editProfile = async (req, res) => {
     }
   } else if (req.user.role === 'customer') {
     const updates = Object.keys(req.body);
-    const updateFields = ['name', 'email', 'password', 'profile_picture', 'gender', 'address', 'city', 'country'];
-    const isValidFields = updates.every((update) => updateFields.includes(update));
+    const updateFields = [
+      'name',
+      'email',
+      'password',
+      'profile_picture',
+      'gender',
+      'address',
+      'city',
+      'country'
+    ];
+    const isValidFields = updates.every(update =>
+      updateFields.includes(update)
+    );
 
-    if (!isValidFields) return res.status(400).send({ error: 'Invalid updates!' });
+    if (!isValidFields)
+      return res.status(400).send({ error: 'Invalid updates!' });
 
     try {
-      updates.forEach((update) => req.user[update] = req.body[update]);
+      updates.forEach(update => (req.user[update] = req.body[update]));
       await req.user.save();
       res.send(req.user);
     } catch (e) {
@@ -150,17 +181,21 @@ const uploadAvatar = async (req, res, next) => {
       });
     }
     // eslint-disable-next-line camelcase
-    return User.findByIdAndUpdate({ _id: id }, { $set: { profile_picture: response } }, (error, result) => {
-      /* istanbul ignore if */
-      if (error) {
-        return res.status(500).json({
-          message: error
+    return User.findByIdAndUpdate(
+      { _id: id },
+      { $set: { profile_picture: response } },
+      (error, result) => {
+        /* istanbul ignore if */
+        if (error) {
+          return res.status(500).json({
+            message: error
+          });
+        }
+        return res.status(201).json({
+          message: 'Avatar Uploaded'
         });
       }
-      return res.status(201).json({
-        message: 'Avatar Uploaded'
-      });
-    });
+    );
   }
   /* istanbul ignore next */
   return res.status(404).json({
@@ -182,7 +217,6 @@ const updateFcmToken = (req, res, next) => {
   });
 };
 
-
 module.exports = {
   register,
   login,
@@ -191,5 +225,5 @@ module.exports = {
   getUser,
   uploadAvatar,
   updateFcmToken,
-  findMusicianName
+  getUserId
 };
