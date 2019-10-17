@@ -10,6 +10,9 @@
 
 #UPDATE README
 
+# PROJECT CLASS
+A nodejs application that functions as API for FE and RN developer. This project are meant to be fulfiling the requirements of graduation from Glints Academy powered by Binar.
+
 # Running locally
 
 Make sure you have nodejs installed. After that, clone the project and change directory to cloned project, you can follow the below command:
@@ -34,5 +37,8 @@ Your app now should be running on port 3000
 You also can test the app by running command: 
 
 `npm run test`
+
+# API Docs
+[API Documentation](https://documenter.getpostman.com/view/8858534/SVtN3X9i?version=latest#d4cc9eef-7ad9-406e-9f53-92113020dae5)
 
 
