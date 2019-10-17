@@ -1,0 +1,36 @@
+stages:
+  - test
+  - production
+  
+test:
+  type: test
+  stage: test
+  image: node:10.16.3-alpine
+  variables:
+    DBTEST: mongodb+srv://ali:ali@cluster0-kj6pk.mongodb.net/test?retryWrites=true&w=majority
+    NODE_ENV: test
+    SENDGRID_API_KEY: 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
+    JWT_SECRET_KEY: youllbeallright
+    CLOUDINARY_CLOUD_NAME: dxjwnnjaz
+    CLOUDINARY_API_KEY: 214498814233799
+    CLOUDINARY_API_SECRET: vOTSzrkiSiV01yJjQRkDd3pZy9g
+    DBDEV: mongodb+srv://ali:ali@cluster0-oltyy.mongodb.net/test?retryWrites=true&w=majority
+  script:
+    - npm install
+    - npm test
+  only:
+    - master
+
+deploy-to-heroku:
+  type: deploy
+  stage: production
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
+    - curl -X POST --data chat_id=$CHAT_ID --data-urlencode text="Museek | $CI_COMMIT_TITLE - Deployed to Heroku!" $TELEGRAM_BOT/sendMessage
+  
+  only:
+    - master

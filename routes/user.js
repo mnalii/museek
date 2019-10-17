@@ -1,16 +1,31 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const { 
-  register, 
+const {
+  register,
   login,
-  logout, 
-  userProfile } = require('../controllers/user')
-const auth  = require('../middleware/auth')
+  getUser,
+  userProfile,
+  editProfile,
+  uploadAvatar,
+  updateFcmToken,
+  getUserId
+} = require('../controllers/user');
+const auth = require('../middleware/auth');
+const { multerUploads } = require('../middleware/cloudinaryUpload');
 
-router.post('/register', register)
-router.post('/login', login)
-router.post('/logout', auth, logout)
-router.get('/me', auth, userProfile)
+router.post('/register', register);
+router.post('/login', login);
+router.get('/profile', auth, userProfile);
+router.put('/profile', auth, editProfile);
+router.get('/', getUser);
+router.put(
+  '/upload-avatar',
+  auth,
+  multerUploads.single('avatar'),
+  uploadAvatar
+);
+router.put('/fcm-token', auth, updateFcmToken);
+router.get('/:id', getUserId);
 
-module.exports = router
+module.exports = router;
