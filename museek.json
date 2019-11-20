@@ -1,0 +1,994 @@
+{
+	"info": {
+		"_postman_id": "389c822e-e68b-44f4-b082-0bf564b17424",
+		"name": "Museek API",
+		"description": "Backend API for Museek application to manage event and user authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User ",
+			"item": [
+				{
+					"name": "REGISTER AS CUSTOMER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Gita\",\n\t\"email\": \"gita@gmail.com\",\n\t\"password\": \"1234567\",\n\t\"role\": \"customer\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/register",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER AS MUSICIAN",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Andre\",\n\t\"email\": \"muh.nurali14493@gmail.com\",\n\t\"password\": \"1234567\",\n\t\"role\": \"musician\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/register",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN AS CUSTOMER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"gita@gmail.com\",\n\t\"password\": \"1234567\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/login",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN AS MUSICIAN",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"virza@gmail.com\",\n\t\"password\": \"1234567\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/login",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL MUSICIAN",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user?role=musician",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "musician"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ PROFILE",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkxOGE2NjQzNmFhNTAwMTdlZDhkOTQiLCJpYXQiOjE1Njk4MTk1NDZ9.2lTml8W2gy9MGz1TKfaFwgBPuNyiQPl-3Qng3bzFlSI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/profile",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET USER BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/5d9b0f6bb26a75001740c759",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"5d9b0f6bb26a75001740c759"
+							]
+						},
+						"description": "Get specific user by his/her ID"
+					},
+					"response": []
+				},
+				{
+					"name": "GET MUSICIAN BY GENRE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user?genre=Country",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "Country"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE MUSICIAN DATA",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE2YmVjYjczYjUzZjAwMTc2ZGFjMDUiLCJpYXQiOjE1NzEyOTg2NTF9.-T7h3Y-xOOxf6TkMm63pGXXMs7FhsDKxqAsGXrFy408",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Andre\",\n\t\"price\": 3000,\n\t\"gender\": \"male\",\n\t\"address\": \"Fake Street 123\",\n\t\"city\": \"Batam\",\n\t\"country\": \"Indonesia\",\n\t\"skill\": [\"Acoustic\", \"Heavy Metal\"],\n\t\"description\": \"I used to play solo, email me at billie12@gmai.com for booking ;-)\",\n\t\"genre\": [\"Country\", \"Dangdut\"]\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/profile",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE CUSTOMER DATA",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkxODlkOTQzNmFhNTAwMTdlZDhkOTIiLCJpYXQiOjE1Njk4MjUyNTZ9.3HPixY62h4eOXCkHNmVRO8DhvDqgBz9LG4y8zzmyIlA",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Chelsea\",\n\t\"email\": \"chels@gmail.com\",\n\t\"password\": \"1234567\",\n\t\"gender\": \"female\",\n\t\"address\": \"Road 123\",\n\t\"city\": \"Batam\",\n\t\"country\": \"Indonesia\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/profile",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPLOAD USER IMAGE",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDk1YzRjMzFkODEzMTAwMTc0ZDRiZTkiLCJpYXQiOjE1NzAwOTY3Njl9.rxOlaBvSDx2FMSTlLtW1y0aRtjOA9_N1iAzNeMSFY-0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/ali/Downloads/node-course-images (1)/node-course-images/philly.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/upload-avatar",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"upload-avatar"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "User CRUD functionality"
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "ADD EVENT BY CUSTOMER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE2YmQxNzczYjUzZjAwMTc2ZGFjMDAiLCJpYXQiOjE1NzEyMDg0OTZ9.6dr0wYjXzggNcCNtG-FkmB5iM4EyFe8LXtYZ-zl-8EM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category\": \"Birthday Party\",\n\t\"musicianId\":\"5da6becb73b53f00176dac05\",\n\t\"dateEvent\": \"10-10-2020\",\n\t\"duration\": 3600000,\n\t\"location\": \"Solo\"\n\t\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET EVENT DETAIL BY EVENT ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event/5db0185c7827520017dd614c",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event",
+								"5db0185c7827520017dd614c"
+							]
+						},
+						"description": "https://museek.herokuapp.com/api/event/{eventId}"
+					},
+					"response": []
+				},
+				{
+					"name": "GET EVENT BY CUSTOMER ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event?customerId=5da6bd1773b53f00176dac00",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "5da6bd1773b53f00176dac00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET EVENT BY MUSICIAN ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event?musicianId=5da6becb73b53f00176dac05",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event"
+							],
+							"query": [
+								{
+									"key": "musicianId",
+									"value": "5da6becb73b53f00176dac05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET EVENT BY DATE & STATUS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event?dateEvent=2020-10-10T00:00:00.000Z&status=pending",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "5da6bd1773b53f00176dac0",
+									"disabled": true
+								},
+								{
+									"key": "dateEvent",
+									"value": "2020-10-10T00:00:00.000Z"
+								},
+								{
+									"key": "status",
+									"value": "pending"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL EVENTS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE EVENT BY CUSTOMER",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE2YmQxNzczYjUzZjAwMTc2ZGFjMDAiLCJpYXQiOjE1NzEyMDg0OTZ9.6dr0wYjXzggNcCNtG-FkmB5iM4EyFe8LXtYZ-zl-8EM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"location\": \"Bali\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event/5da6bf4373b53f00176dac08",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event",
+								"5da6bf4373b53f00176dac08"
+							]
+						},
+						"description": "https://museek.herokuapp.com/api/event/{eventId}"
+					},
+					"response": []
+				},
+				{
+					"name": "ACCEPTED EVENT BY MUSICIAN",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE1OGQ0ZDY1NjQwZjAwMTdiNmNlODEiLCJpYXQiOjE1NzExMzA3MjF9.SEUifTIXd7WREfL97wm5XZHLufQBvCkYkQMfkAOOsOs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\": \"accepted\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event/status/5da58f1765640f0017b6ce86",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event",
+								"status",
+								"5da58f1765640f0017b6ce86"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REJECTED EVENT BY MUSICIAN",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE1OGQ0ZDY1NjQwZjAwMTdiNmNlODEiLCJpYXQiOjE1NzExMzA3MjF9.SEUifTIXd7WREfL97wm5XZHLufQBvCkYkQMfkAOOsOs"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\": \"rejected\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event/status/5da58f1765640f0017b6ce86",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event",
+								"status",
+								"5da58f1765640f0017b6ce86"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Event CRUD functionality by Customer and Musician"
+		},
+		{
+			"name": "Favourite",
+			"item": [
+				{
+					"name": "ADD MUSICIAN TO CUSTOMER FAVOURITE",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE2YmQxNzczYjUzZjAwMTc2ZGFjMDAiLCJpYXQiOjE1NzEyMDg0OTZ9.6dr0wYjXzggNcCNtG-FkmB5iM4EyFe8LXtYZ-zl-8EM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"customerId\": \"5da6bd1773b53f00176dac00\",\n\t\"musicianId\": \"5da6becb73b53f00176dac05\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/favorite",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET FAVOURITE",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE2YmQxNzczYjUzZjAwMTc2ZGFjMDAiLCJpYXQiOjE1NzEyMDg0OTZ9.6dr0wYjXzggNcCNtG-FkmB5iM4EyFe8LXtYZ-zl-8EM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/favorite",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET FAVOURITE DETAIL",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDlhZWNlMmNlZGFkMzAwMTc3NzEzZTUiLCJpYXQiOjE1NzA0MzQzNjV9.IR_7eLpBT4qd6_PTKmFXLl9DbG6EIvBTv10SsLSHy0o",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/favorite/5db019475651d000179cf5aa",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"favorite",
+								"5db019475651d000179cf5aa"
+							]
+						},
+						"description": "https://museek.herokuapp.com/api/favorite/{favorite_id}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE EVENT BY CUSTOMER",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE2YmQxNzczYjUzZjAwMTc2ZGFjMDAiLCJpYXQiOjE1NzEyMDg0OTZ9.6dr0wYjXzggNcCNtG-FkmB5iM4EyFe8LXtYZ-zl-8EM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event/5da6bda973b53f00176dac04",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event",
+								"5da6bda973b53f00176dac04"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "https://museek.herokuapp.com/api/event/{eventId}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE FAVOURITE BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDlhZWNlMmNlZGFkMzAwMTc3NzEzZTUiLCJpYXQiOjE1NzA0MzQzNjV9.IR_7eLpBT4qd6_PTKmFXLl9DbG6EIvBTv10SsLSHy0o",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/favorite/5da6c26e73b53f00176dac0a",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"favorite",
+								"5da6c26e73b53f00176dac0a"
+							]
+						},
+						"description": "Delete favourite by ID, user authentication as customer needed"
+					},
+					"response": []
+				}
+			],
+			"description": "Favourite functionality for Musician"
+		},
+		{
+			"name": "FCM Token",
+			"item": [
+				{
+					"name": "REMOVE FCM TOKEN",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDlhZWNlMmNlZGFkMzAwMTc3NzEzZTUiLCJpYXQiOjE1NzExMzA4NTB9.MTsiHyhxbanGnJywsJxPAc5vuhs9VFYyyEszx96fguk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fcmToken\": \"notoken\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/fcm-token",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"fcm-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRIVACY POLICY ENDPOINT",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/privacy-policy",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"privacy-policy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE FCM TOKEN",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDlhZWNlMmNlZGFkMzAwMTc3NzEzZTUiLCJpYXQiOjE1NzExMzA4NTB9.MTsiHyhxbanGnJywsJxPAc5vuhs9VFYyyEszx96fguk",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fcmToken\": \"token\"\n}"
+						},
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/user/fcm-token",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user",
+								"fcm-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET INVOICE",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDlhZWNlMmNlZGFkMzAwMTc3NzEzZTUiLCJpYXQiOjE1NzA0MzQzNjV9.IR_7eLpBT4qd6_PTKmFXLl9DbG6EIvBTv10SsLSHy0o",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://museek.herokuapp.com/api/event/invoices/5db0185c7827520017dd614c",
+							"protocol": "https",
+							"host": [
+								"museek",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"event",
+								"invoices",
+								"5db0185c7827520017dd614c"
+							]
+						},
+						"description": "Customer will get the inoice once the event accepted by musician, customer authorization nedded to get this invoice"
+					},
+					"response": []
+				}
+			],
+			"description": "FCM Token Notification"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b43e5428-f2a5-432c-9587-d7eacf28dd28",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c459202e-ec5c-4c34-aa0d-f82453c235ee",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
