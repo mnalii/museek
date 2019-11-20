@@ -39,6 +39,7 @@ You also can test the app by running command:
 `npm run test`
 
 # API Docs
-[API Documentation](https://documenter.getpostman.com/view/8858534/SVtN3X9i?version=latest#d4cc9eef-7ad9-406e-9f53-92113020dae5)
+The API is live at [museek-api.herokuapp.com](https://museek-api.herokuapp.com/)
+Extensive documentation with examples [here](https://documenter.getpostman.com/view/8858534/SVtN3X9i?version=latest)
 
 
